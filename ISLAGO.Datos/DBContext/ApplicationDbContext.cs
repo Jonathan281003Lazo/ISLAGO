@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ISLAGO.Entidad.Models;
 using Microsoft.EntityFrameworkCore;
+using MigracionesBDISLAGO.Models;
 
 namespace ISLAGO.Datos.DBContext;
 
@@ -24,9 +25,9 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Detfacturatmp> Detfacturatmps { get; set; }
 
-    public virtual DbSet<Empleado> Empleados { get; set; }
-
     public virtual DbSet<Factura> Facturas { get; set; }
+
+    public virtual DbSet<Persona> Personas { get; set; }
 
     public virtual DbSet<Proveedor> Proveedors { get; set; }
 
@@ -180,43 +181,6 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("fk_usuario");
         });
 
-        modelBuilder.Entity<Empleado>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("empleado_pkey");
-
-            entity.ToTable("empleado");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Correo)
-                .HasMaxLength(60)
-                .HasColumnName("correo");
-            entity.Property(e => e.Direccion)
-                .HasMaxLength(75)
-                .HasColumnName("direccion");
-            entity.Property(e => e.Estado)
-                .HasDefaultValue(true)
-                .HasColumnName("estado");
-            entity.Property(e => e.Fechanac)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("fechanac");
-            entity.Property(e => e.Imagen).HasColumnName("imagen");
-            entity.Property(e => e.Primerapellido)
-                .HasMaxLength(50)
-                .HasColumnName("primerapellido");
-            entity.Property(e => e.Primernombre)
-                .HasMaxLength(50)
-                .HasColumnName("primernombre");
-            entity.Property(e => e.Segundoapellido)
-                .HasMaxLength(50)
-                .HasColumnName("segundoapellido");
-            entity.Property(e => e.Segundonombre)
-                .HasMaxLength(50)
-                .HasColumnName("segundonombre");
-            entity.Property(e => e.Telefono)
-                .HasMaxLength(25)
-                .HasColumnName("telefono");
-        });
-
         modelBuilder.Entity<Factura>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("factura_pkey");
@@ -243,6 +207,50 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.Idusuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_usuario");
+        });
+
+        modelBuilder.Entity<Persona>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("empleado_pkey");
+
+            entity.ToTable("persona");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('empleado_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.Correo)
+                .HasMaxLength(60)
+                .HasColumnName("correo");
+            entity.Property(e => e.Direccion)
+                .HasMaxLength(75)
+                .HasColumnName("direccion");
+            entity.Property(e => e.Estado)
+                .HasDefaultValue(true)
+                .HasColumnName("estado");
+            entity.Property(e => e.Fechanac)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("fechanac");
+            entity.Property(e => e.IdRol).HasColumnName("idRol");
+            entity.Property(e => e.Imagen).HasColumnName("imagen");
+            entity.Property(e => e.Primerapellido)
+                .HasMaxLength(50)
+                .HasColumnName("primerapellido");
+            entity.Property(e => e.Primernombre)
+                .HasMaxLength(50)
+                .HasColumnName("primernombre");
+            entity.Property(e => e.Segundoapellido)
+                .HasMaxLength(50)
+                .HasColumnName("segundoapellido");
+            entity.Property(e => e.Segundonombre)
+                .HasMaxLength(50)
+                .HasColumnName("segundonombre");
+            entity.Property(e => e.Telefono)
+                .HasMaxLength(25)
+                .HasColumnName("telefono");
+
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Personas)
+                .HasForeignKey(d => d.IdRol)
+                .HasConstraintName("idRol");
         });
 
         modelBuilder.Entity<Proveedor>(entity =>
@@ -323,7 +331,6 @@ public partial class ApplicationDbContext : DbContext
                 .HasDefaultValue(true)
                 .HasColumnName("estado");
             entity.Property(e => e.Idempleado).HasColumnName("idempleado");
-            entity.Property(e => e.Idrol).HasColumnName("idrol");
             entity.Property(e => e.Imagen).HasColumnName("imagen");
             entity.Property(e => e.Password)
                 .HasMaxLength(60)
@@ -336,11 +343,6 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.Idempleado)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_empleado");
-
-            entity.HasOne(d => d.IdrolNavigation).WithMany(p => p.Usuarios)
-                .HasForeignKey(d => d.Idrol)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_rol");
         });
 
         OnModelCreatingPartial(modelBuilder);

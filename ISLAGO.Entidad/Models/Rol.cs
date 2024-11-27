@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ISLAGO.Entidad.Models;
+using System;
 using System.Collections.Generic;
 
-namespace ISLAGO.Entidad.Models;
+namespace MigracionesBDISLAGO.Models;
 
 public partial class Rol
 {
@@ -11,5 +12,5 @@ public partial class Rol
 
     public bool? Estado { get; set; }
 
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    public virtual ICollection<Persona> Personas { get; set; } = new List<Persona>();
 }
