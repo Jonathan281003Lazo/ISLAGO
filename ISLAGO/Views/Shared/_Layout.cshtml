@@ -37,7 +37,7 @@
                     <li>
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Administración <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
                         <ul class="list-unstyled">
-                            <li><a href="section.html"><i class="zmdi zmdi-assignment-account zmdi-hc-fw"></i>&nbsp;&nbsp; Usuario</a></li>
+                            <li><a href="@Url.Action("Index", "Usuario")"><i class="zmdi zmdi-assignment-account zmdi-hc-fw"></i>&nbsp;&nbsp; Usuario</a></li>
                             <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Proveedor</a></li>
                         </ul>
                     </li>
@@ -90,11 +90,6 @@
                 </li>
             </ul>
         </nav>
-        <div class="container">
-            <div class="page-header">
-                <h1 class="all-tittles">SISTEMA ISLAGO <small>Inicio</small></h1>
-            </div>
-        </div>
         <div class="container-fluid">
 
             @RenderBody()
