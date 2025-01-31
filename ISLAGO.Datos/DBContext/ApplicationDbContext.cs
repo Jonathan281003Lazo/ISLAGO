@@ -21,7 +21,7 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Categoria> Categoria { get; set; }
 
-    public virtual DbSet<Detfactura> Detfacturas { get; set; }
+    public virtual DbSet<Detfactura> Detfactura { get; set; }
 
     public virtual DbSet<Detfacturatmp> Detfacturatmps { get; set; }
 

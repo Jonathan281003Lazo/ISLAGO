@@ -15,34 +15,86 @@ namespace ISLAGO.Datos.Implementacion
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public GenericRepository()
+        public GenericRepository(ApplicationDbContext dbContext)
         {
-            
+            _dbContext = dbContext;
         }
 
-        public Task<TEntity> Obtener(Expression<Func<TEntity, bool>> filtro)
+        public async Task<TEntity> Obtener(Expression<Func<TEntity, bool>> filtro)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                TEntity entidad = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(filtro);
+                return entidad;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+
+            }
         }
 
-        public Task<TEntity> Crear(TEntity entidad)
+        public async Task<TEntity> Crear(TEntity entidad)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                _dbContext.Set<TEntity>().Add(entidad);
+                await _dbContext.SaveChangesAsync();
+                return entidad;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+
+            }
         }
 
-        public Task<bool> Editar(TEntity entidad)
+        public async Task<bool> Editar(TEntity entidad)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                _dbContext.Update(entidad);
+                await _dbContext.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+
+            }
         }
 
-        public Task<bool> Eliminar(TEntity entidad)
+        public async Task<bool> Eliminar(TEntity entidad)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                _dbContext.Remove(entidad);
+                await _dbContext.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+
+            }
         }
 
-        public Task<IQueryable<TEntity>> Consultar(Expression<Func<TEntity, bool>> filtro = null)
+        public async Task<IQueryable<TEntity>> Consultar(Expression<Func<TEntity, bool>> filtro = null)
         {
-            throw new NotImplementedException();
+            IQueryable<TEntity> queryEntidad = filtro == null ? _dbContext.Set<TEntity>() : _dbContext.Set<TEntity>().Where(filtro);
+            return queryEntidad;
         }
 
     }
