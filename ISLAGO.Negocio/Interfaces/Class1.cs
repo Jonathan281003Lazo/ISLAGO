@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ISLAGO.Negocio.Interfaces
 {
-    internal class Class1
+    public class Class1
     {
     }
 }

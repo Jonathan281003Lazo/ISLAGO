@@ -33,6 +33,8 @@ public partial class Articulo
 
     public int Idcategoria { get; set; }
 
+    public string? CodigoBarra { get; set; }
+
     public virtual ICollection<Detfactura> Detfacturas { get; set; } = new List<Detfactura>();
 
     public virtual ICollection<Detfacturatmp> Detfacturatmps { get; set; } = new List<Detfacturatmp>();

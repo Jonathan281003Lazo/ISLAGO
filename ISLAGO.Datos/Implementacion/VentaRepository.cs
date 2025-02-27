@@ -69,7 +69,26 @@ namespace ISLAGO.Datos.Implementacion
 
                     await _dbContext.SaveChangesAsync();
 
-                    //NumeroCorrelativo
+                    Numerocorrelativo correlativo = _dbContext.Numerocorrelativos.Where(n => n.Gestion == "venta").First();
+
+                    correlativo.Ultimonumero = correlativo.Ultimonumero + 1;
+                    correlativo.Fechaactualizacion = DateTime.Now;
+
+                    _dbContext.Numerocorrelativos.Update(correlativo);
+                    await _dbContext.SaveChangesAsync();
+
+                    string ceros = string.Concat(Enumerable.Repeat("0", correlativo.Cantidaddigitos.Value));
+                    string numeroventa = ceros + correlativo.Ultimonumero.ToString();
+                    numeroventa = numeroventa.Substring(numeroventa.Length - correlativo.Cantidaddigitos.Value, correlativo.Cantidaddigitos.Value);
+
+                    entidad.Numeroventa = numeroventa;
+
+                    await _dbContext.Factura.AddAsync(entidad);
+                    await _dbContext.SaveChangesAsync();
+
+                    FacturaGenerada = entidad;
+
+                    transition.Commit();
 
                 }
                 catch (Exception ex)
@@ -81,12 +100,25 @@ namespace ISLAGO.Datos.Implementacion
                 }
 
             }
+
+            return FacturaGenerada;
            
         }
 
-        public Task<List<Factura>> Reporte(DateTime FechaInicio, DateTime FechaFin)
+        public async Task<List<Detfactura>> Reporte(DateTime FechaInicio, DateTime FechaFin)
         {
-            throw new NotImplementedException();
+
+            //throw new NotImplementedException();
+            List<Detfactura> listaResumen = await _dbContext.Detfacturas
+                .Include(f => f.IdfacturaNavigation)
+                .ThenInclude(U => U.IdusuarioNavigation)
+                .Include(f => f.IdfacturaNavigation)
+                .ThenInclude(tdfv => tdfv.IdTipoDocumentoNavigation)
+                .Where(df => df.IdfacturaNavigation.Fecha.Date >= FechaInicio.Date && 
+                    df.IdfacturaNavigation.Fecha.Date <= FechaFin.Date    
+                ).ToListAsync();
+
+            return listaResumen;
         }
     }
 }

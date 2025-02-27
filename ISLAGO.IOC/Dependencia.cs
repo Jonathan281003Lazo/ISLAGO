@@ -10,8 +10,7 @@ using ISLAGO.Datos.DBContext;
 using Microsoft.EntityFrameworkCore;
 using ISLAGO.Datos.Implementacion;
 using ISLAGO.Datos.Interfaces;
-using ISLAGO.Negocio.Implementacion;
-using ISLAGO.Negocio.Interfaces;
+
 
 namespace ISLAGO.IOC
 {
@@ -26,6 +25,12 @@ namespace ISLAGO.IOC
                 options.UseNpgsql(configuration.GetConnectionString("CadenaPGSQL"));
 
             });
+
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IVentaRepository, VentaRepository>();
+
+            services.AddScoped<ICorreoService, CorreoService>();
+
         }
 
     }

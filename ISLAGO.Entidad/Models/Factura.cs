@@ -1,5 +1,4 @@
-﻿using MigracionesBDISLAGO.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ISLAGO.Entidad.Models;
@@ -20,9 +19,17 @@ public partial class Factura
 
     public int Idusuario { get; set; }
 
+    public string Numeroventa { get; set; } = null!;
+
+    public float Subtotal { get; set; }
+
+    public int? IdTipoDocumento { get; set; }
+
     public virtual ICollection<Detfactura> Detfacturas { get; set; } = new List<Detfactura>();
 
     public virtual ICollection<Detfacturatmp> Detfacturatmps { get; set; } = new List<Detfacturatmp>();
+
+    public virtual Tipodocumentoventum? IdTipoDocumentoNavigation { get; set; }
 
     public virtual Usuario IdusuarioNavigation { get; set; } = null!;
 }

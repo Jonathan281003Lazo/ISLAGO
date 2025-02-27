@@ -13,7 +13,7 @@ namespace ISLAGO.Datos.Interfaces
     {
 
         Task<Factura> Registrar(Factura entidad);
-        Task<List<Factura>> Reporte(DateTime FechaInicio, DateTime FechaFin);
+        Task<List<Detfactura>> Reporte(DateTime FechaInicio, DateTime FechaFin);
 
     }
 }

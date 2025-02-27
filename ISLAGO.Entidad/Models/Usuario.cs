@@ -1,8 +1,7 @@
-﻿using ISLAGO.Entidad.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace MigracionesBDISLAGO.Models;
+namespace ISLAGO.Entidad.Models;
 
 public partial class Usuario
 {
@@ -14,9 +13,11 @@ public partial class Usuario
 
     public string Imagen { get; set; } = null!;
 
-    public int Idempleado { get; set; }
-
     public bool? Estado { get; set; }
+
+    public int? IdRol { get; set; }
+
+    public DateTime? FechaRegistro { get; set; }
 
     public virtual ICollection<Detfactura> Detfacturas { get; set; } = new List<Detfactura>();
 
@@ -24,7 +25,7 @@ public partial class Usuario
 
     public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
 
-    public virtual Persona IdempleadoNavigation { get; set; } = null!;
+    public virtual Rol? IdRolNavigation { get; set; }
 
     public virtual ICollection<Twofactorauth> Twofactorauths { get; set; } = new List<Twofactorauth>();
 }

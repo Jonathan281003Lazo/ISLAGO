@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+
+using ISLAGO.Datos.Interfaces;
+using ISLAGO.Entidad;
+using ISLAGO.Negocio.Interfaces;
+using MigracionesBDISLAGO.Models;
+
+namespace ISLAGO.Datos.Implementacion
+{
+    public class CorreoService : ICorreoService
+    {
+        private readonly IGenericRepository<Configuracion> _repo;
+
+        public CorreoService(IGenericRepository<Configuracion> repo)
+        {
+            _repo = repo;
+        }
+
+        public async Task<bool> EnviarCorreo(string CorreoDestino, string Asunto, string Mensaeje)
+        {
+
+            try
+            {
+
+                IQueryable<Configuracion> query = await _repo.Consultar(c => c.Recurso.Equals("Servicio_Correo"));
+
+                Dictionary<string, string> Config = query.ToDictionary(keySelector: c => c.Propiedad, elementSelector: c => c.Valor);
+
+                var credenciales = new NetworkCredential(Config["correo"], Config["clave"]);
+
+                var correo = new MailMessage()
+                {
+
+                    From = new MailAddress(Config["correo"], Config["alias"]),
+                    Subject = Asunto,
+                    Body = Mensaeje,
+                    IsBodyHtml = true
+
+                };
+
+                correo.To.Add(new MailAddress(CorreoDestino));
+
+                var clienteServidor = new SmtpClient()
+                {
+
+                    Host = Config["host"],
+                    Port = int.Parse(Config["puerto"]),
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    EnableSsl = true
+
+                };
+
+                clienteServidor.Send(correo);
+
+                return true;
+
+            }
+            catch 
+            {
+
+                return false;
+
+            }
+
+        }
+    }
+}

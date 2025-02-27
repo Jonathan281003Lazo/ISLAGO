@@ -1,5 +1,4 @@
-﻿using MigracionesBDISLAGO.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ISLAGO.Entidad.Models;
@@ -31,6 +30,4 @@ public partial class Persona
     public int IdRol { get; set; }
 
     public virtual Rol IdRolNavigation { get; set; } = null!;
-
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }

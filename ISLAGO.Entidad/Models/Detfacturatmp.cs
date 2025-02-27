@@ -1,5 +1,4 @@
-﻿using MigracionesBDISLAGO.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ISLAGO.Entidad.Models;
