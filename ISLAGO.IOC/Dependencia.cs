@@ -10,6 +10,9 @@ using ISLAGO.Datos.DBContext;
 using Microsoft.EntityFrameworkCore;
 using ISLAGO.Datos.Implementacion;
 using ISLAGO.Datos.Interfaces;
+using ISLAGO.Negocio.Implementacion;
+using ISLAGO.Negocio.Interfaces;
+using System.Net.Security;
 
 
 namespace ISLAGO.IOC
@@ -30,6 +33,9 @@ namespace ISLAGO.IOC
             services.AddScoped<IVentaRepository, VentaRepository>();
 
             services.AddScoped<ICorreoService, CorreoService>();
+
+            services.AddScoped<IUtilidadesService, UtilidadesService>();
+            services.AddScoped<IRolService, RolService>();
 
         }
 

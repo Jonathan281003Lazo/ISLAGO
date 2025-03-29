@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ISLAGO.Negocio.Interfaces
 {
-    public class Class1
+    public interface IUtilidadesService
     {
+
+        string GenerarClave();
+
+        string ConvertirSha256(string texto);
+
     }
 }

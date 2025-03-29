@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ISLAGO.Negocio.Interfaces
 {
-    internal class Class2
+    public interface ICorreoService
     {
+        Task<bool> EnviarCorreo(string CorreoDestino, string Asunto, string Mensaeje);
     }
 }

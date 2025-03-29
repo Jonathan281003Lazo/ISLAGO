@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ISLAGO.Negocio\ISLAGO.Negocio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\img-server\" />
+  </ItemGroup>
+
 </Project>

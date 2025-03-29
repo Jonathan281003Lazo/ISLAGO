@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MigracionesBDISLAGO.Models;
+namespace ISLAGO.Entidad.Models;
 
 public partial class Configuracion
 {

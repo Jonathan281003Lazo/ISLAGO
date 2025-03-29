@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using ISLAGO.Entidad.Models;
 using Microsoft.EntityFrameworkCore;
-using MigracionesBDISLAGO.Models;
-//using ISLAGO.Entidad.Models;
 
 namespace ISLAGO.Datos.DBContext;
 

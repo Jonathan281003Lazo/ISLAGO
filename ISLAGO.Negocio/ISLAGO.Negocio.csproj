@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ISLAGO.Datos\ISLAGO.Datos.csproj" />
     <ProjectReference Include="..\ISLAGO.Entidad\ISLAGO.Entidad.csproj" />
   </ItemGroup>
 

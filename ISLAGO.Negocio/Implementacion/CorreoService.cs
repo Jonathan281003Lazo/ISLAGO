@@ -7,11 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ISLAGO.Datos.Interfaces;
-using ISLAGO.Entidad;
+using ISLAGO.Entidad.Models;
 using ISLAGO.Negocio.Interfaces;
-using MigracionesBDISLAGO.Models;
 
-namespace ISLAGO.Datos.Implementacion
+namespace ISLAGO.Negocio.Implementacion
 {
     public class CorreoService : ICorreoService
     {
